@@ -1,0 +1,22 @@
+p, h2, h3, h4, h5, h6 {
+    font-size: large;
+    color: gray;
+}
+h1 {
+    color: gray;
+}
+body {
+    background: rgba(205, 255, 249, 0.24);
+}
+button {
+    background: orangered;
+    color: aliceblue;
+    padding: 7px;
+    margin: 5px;
+    border-style: none;
+    border-radius: 7px;
+}
+a {
+    text-decoration-line: none;
+    color: aliceblue;
+}

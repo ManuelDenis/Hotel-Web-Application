@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+
+<div class="container my-5">
+	<div class="row">
+		<div class="col-md-12">
+            <h1 class="text-info">{{ hotel|capfirst }}</h1>
+            {% if hotel %}
+                <a href="{% url 'hotel_update' hotel.id %}"><h5><i class="bi bi-pencil-square text-info"></i></h5></a>
+            {% else %}
+                <div class="row bg-warning py-3 my-3">
+                <h3>Please add hotel to your account!</h3>
+                <a href="{% url 'hotel_create' %}"><button class="shadow mb-5">Add hotel</button></a>
+                </div>
+            {% endif %}
+                <button class="mt-5"><a href="{% url 'room_create' %}">Add new room</a></button></h3>
+            <div class="table-responsive text-nowrap">
+			<table class="table table-sm" id="sortTable">
+	<thead>
+		<tr>
+            <th></th>
+			<th>Room Nr|Det</th>
+			<th>Capacity</th>
+			<th>Guests</th>
+			<th>Is taken</th>
+            <th>Add res</th>
+            <th>Start/End  Res</th>
+		</tr>
+	</thead>
+	<tbody>
+    {% for room in object_list %}
+		<tr style="{% if room.is_taken %}background: rgba(163,241,245,0.67){% endif %}">
+            <td><button><a href="{% url 'room_update' room.id%}"><i class="bi bi-pencil-square text-light"></i></a></button></td>
+            <td><button style="width: 50px; background: #037df6; border-radius: 100px"><a href="{% url 'room_detail' room.id %}">{{ room.number }}</a></button></td>
+            <td>{{ room.capacity }}</td>
+            <td>{{ room.guests }}</td>
+            <td>{{ room.is_taken }}</td>
+            <td><button><a href="{% url 'reservations_create' room.id %}">Add res</a></button></td>
+            <td>{% for res in res %}
+                {% if res.room.number == room.number %}
+                    <a style="position: relative; top: 10px; border-radius: 7px" href="{% url 'reservations_update' res.id %}" class="text-light bg-info p-1">{{ res.start|date:"dMy" }} | {{ res.end|date:"dMy" }}</a>
+                {% endif %}
+            {% endfor %}</td>
+        </tr>
+    {% endfor %}
+	</tbody>
+</table>
+        </div>
+		</div>
+	</div>
+
+</div>
+
+
+<script>
+$('#sortTable').DataTable();
+</script>
+
+{% endblock %}
